@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Reflection Paper</title>
+    <link rel="icon" href="reflection.png" type="png" sizes="96x96"/>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: black; 
+            color: white; 
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
+
+    .container {
+        background-color: #1a1a1a; 
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.1); 
+        text-align: center;
+    }
+
+    h1 {
+        color: gold; 
+        margin-bottom: 20px;
+    }
+
+    form {
+        margin-bottom: 20px;
+        color: white; 
+    }
+
+    input[type="text"] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        background-color: #333; 
+        color: gold; 
+
+    }   
+
+    input[type="text"]::placeholder {
+        color: #bbb; 
+    }
+
+    input[type="submit"] {
+        background-color: gold; 
+        color: black; 
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    input[type="submit"]:hover {
+        background-color: black; 
+        color: gold; 
+    }
+
+    .result, .error {
+        margin-top: 20px;
+        font-size: 16px;
+    }
+
+    .error {
+        color: red; 
+    }
+
+    .questions-list {
+        margin-top: 30px;
+        color: #bbb;
+    }
+
+    .questions-list ul {
+        list-style-type: none;
+        padding-left: 0;
+    }
+
+    .questions-list li {
+        margin-bottom: 5px;
+        color: gold;
+    }
+</style>
+    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+    <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1><strong>Interactive Reflection Paper</strong></h1>
+        <form id="chatForm">
+            <label for="question"><strong>Interact:</strong></label>
+            <input type="text" id="question" name="question" placeholder="Begin interacting..." required>
+            <input type="submit" value="Accept" id="acceptButton">
+        </form>
+        <div id="result" class="result" style="display: none"></div>
+
+        <div class="questions-list">
+            <h3><strong>Accepted Questions:</strong></h3>
+            <ul>
+                <li><em>What have I learned from the campaign?</em></li>
+                <br>
+                <li><em>What is the Data Privacy Act of the Philippine Constitution?</em></li>
+                <br>
+                <li><em>What is the Purpose of the Data Privacy Act?</em></li>
+                <br>
+                <li><em>What are the Preventive Measures When You Are Online?</em></li>
+                <br>
+            </ul>
+        </div>
+    </div>
+
+    <py-script>
+        def answer_question(event):
+            event.preventDefault()
+            
+            question = Element('question').element.value.lower()
+            result_element = Element('result')
+            
+            responses = {
+                "what have i learned from the campaign?": "Attending the program on Data Privacy and Cybercrime was truly eye-opening for me. As a first-year Computer Science student, I've always known that the internet can be risky, but I didn't realize just how vulnerable I was until now. One careless click or decision can really put my privacy, and even my safety, at risk.\n\nThe session helped me grasp the various threats we face online and, more importantly, how I can protect myself. It's wild to think about how often we overlook these dangers while browsing, assuming they won't happen to us. But now, I see that anyone can become a target if they're not careful. This awareness is empowering; it motivates me to take steps to safeguard my personal information.\n\nOne of the most impactful parts of the program was learning about the Data Privacy Act of 2012 (R.A. 10173). Before this, I didn't know much about it, but it was reassuring to discover that there are laws in place in the Philippines designed to protect our personal data. Knowing that I have rights if my information is misused gives me a sense of security, especially when navigating the sometimes murky waters of the internet. It's comforting to think that if something goes wrong, there are legal protections backing me up.\n\nWhat really stood out to me was how the program emphasized the importance of critical thinking regarding our online behavior. We hear so much about data breaches and cybercrimes, yet we often don't stop to consider how these issues could affect us personally. The session made me reflect on my own actions and how careless I've been with my information. I learned about different types of cybercrimes and the techniques criminals use to gather personal data for illegal activities. This knowledge has highlighted the need for vigilance in my online interactions.\n\nI now understand various safety precautions I can take to prevent such incidents from happening, like using strong passwords, enabling two-factor authentication, and being cautious about what information I share online. Being cautious isn't just for big companies; it's something I need to practice in my daily life. As they pointed out in the seminar, taking proactive steps can make a huge difference in keeping ourselves safe online.\n\nThis program also connected directly to my studies in Computer Science. Understanding data privacy laws and cybersecurity principles is crucial for anyone entering this field. The knowledge I gained will not only help me navigate my own online presence more safely but also guide me in my future work in technology. As I dive deeper into subjects like software development and network security, I'll carry these lessons with me.",
+                "what is the data privacy act of the philippine constitution?": "The Data Privacy Act of 2012, officially known as Republic Act No. 10173, is a comprehensive law in the Philippines that aims to protect individuals' personal information and privacy. It establishes guidelines for the collection, processing, storage, and sharing of personal data by both public and private entities. The law also mandates that organizations implement appropriate security measures to safeguard personal information from unauthorized access and breaches.",
+                "what is the purpose of the data privacy act?": "The purpose of the Data Privacy Act is to:\n\n1. Safeguard personal data against misuse and breaches.\n2. Promote transparency in data handling practices by requiring organizations to inform individuals about how their data will be used.\n3. Empower individuals with rights over their personal data, including the right to access, correct, or erase their information.\n4. Establish penalties for non-compliance, thereby encouraging organizations to adhere to data protection standards.",
+                "what are the preventive measures when you are online?": "Preventive measures when you are online include:\n\n1. Keep Personal Information Private: Avoid sharing sensitive details like your full name, address, phone number, or financial information on social media or public forums.\n2. Use Strong Passwords: Create complex passwords that include a mix of uppercase letters, lowercase letters, numbers, and special characters. Change them regularly.\n3. Enable Two-Factor Authentication: This adds an extra layer of security by requiring a second form of verification before accessing your accounts.\n4. Beware of Phishing Scams: Be cautious about unsolicited emails or messages asking for personal information. Do not click on links or download attachments from unknown sources.\n5. Secure Your Internet Connection: Use strong passwords for your home Wi-Fi network and avoid accessing sensitive information over public Wi-Fi unless you are using a VPN.\n6. Update Software Regularly: Keep your operating system, browsers, and security software up to date to protect against vulnerabilities.\n7. Read Privacy Policies: Before using online services or apps, understand how they collect and use your data. If a site lacks a clear privacy policy, consider using alternatives."
+            }
+            
+            if question in responses:
+                result_element.element.innerHTML = f'<pre style="white-space: pre-wrap; word-wrap: break-word; color: whitesmoke; font-size: 18px; line-height: 1.6; font-family: Verdana, sans-serif; text-align: justify;">{responses[question]}</pre>'
+                result_element.element.style.display = "block"
+            else:
+                result_element.element.innerHTML = '<pre style="white-space: pre-wrap; word-wrap: break-word; color: red; font-size: 18px; margin-bottom: 20px; font-family: Verdana, sans-serif; text-align: justify;">Sorry, I cannot answer that question. Please copy and paste only the questions from the "Accepted Questions" list, as those are the only questions I can provide an answer to.</pre>'
+                result_element.element.style.display = "block"
+            
+            Element('question').element.value = ''
+        
+        def setup():
+            Element('chatForm').element.onsubmit = answer_question
+        
+        setup()
+        </py-script>
+        </body>
+        </html>
